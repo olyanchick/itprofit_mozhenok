@@ -1,60 +1,60 @@
+import './styles/style.sass';
+import Inputmask from "inputmask";
+
+// Маска для ввода телефона
+const phoneInput = document.querySelector("#input_phone");
+Inputmask({ mask: "+375 (99) 999-99-99" }).mask(phoneInput);
 
 function validation(form) {
+    const emailInput = document.getElementById("input_email");
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const Inputmask = require("inputmask");
+    let result = true;
 
-    const phoneInput = document.querySelector("#input_phone");
-    const maskOptions = {
-        mask: "+375 (99) 999-99-99",  // Маска для белорусского телефона
-        showMaskOnHover: false,        // Не показывать маску при наведении
-    };
-    Inputmask(maskOptions).mask(phoneInput)
-
+    // Удаление ошибки, если есть
     function removeError(input) {
         const parent = input.parentNode;
-
         if (parent.classList.contains('error')) {
-            parent.querySelector('.error_label').remove()
+            parent.querySelector('.error_label').remove();
             parent.classList.remove('error');
         }
     }
 
+    // Создание сообщения об ошибке
     function createError(input, text) {
         const parent = input.parentNode;
         const errorLabel = document.createElement("label");
-
         errorLabel.classList.add("error_label");
         errorLabel.textContent = text;
-
         parent.classList.add('error');
-
         parent.append(errorLabel);
     }
 
-
-    let result = true;
-
+    // Удаляем предыдущие ошибки
     const allInputs = form.querySelectorAll('input');
-
     for (const input of allInputs) {
-
         removeError(input);
-
         if (input.value === '') {
-            console.log ('Ошибка поля');
             createError(input, 'Поле не заполнено!');
             result = false;
         }
-
     }
 
-    return result
+    // Проверка корректности email
+    if (!emailPattern.test(emailInput.value)) {
+        createError(emailInput, "Пожалуйста, введите корректный адрес электронной почты.");
+        result = false;
+    }
+
+    return result;
 }
 
-document.getElementById('add_form').addEventListener('submit', function (event){
+// Обработчик отправки формы
+document.getElementById('add_form').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    if (validation(this) === true) {
-        alert('Форма проверена успешно!')
+    // Если валидация пройдена, показать сообщение, иначе отменить отправку
+    if (validation(this)) {
+        alert('Форма проверена успешно!');
     }
-})
+});

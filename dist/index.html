@@ -6,30 +6,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="container">
 
-        <form action="" class="form" id="add_form">
+        <form action="" class="form" id="add_form" novalidate>
             <h1 class="form_title">Оставьте заявку и мы Вам перезвоним</h1>
 
             <div class="inputs">
                 <div class="input_box">
                     <h4 >Имя</h4>
-                    <input type="text" class="input_field">
+                    <input type="text" class="input_field" name="name">
                 </div>
                 <div class="input_box">
                     <h4>Email</h4>
-                    <input type="email" class="input_field">
+                    <input type="email" class="input_field" id="input_email" name="email">
                 </div>
                 <div class="input_box">
                     <h4>Телефон</h4>
-                    <input type="text" class="input_field" id="input_phone">
+                    <input type="text" class="input_field" id="input_phone" name="phone">
                 </div>
                 <div class="input_box">
                     <h4>Сообщение</h4>
-                    <textarea></textarea>
+                    <textarea name="message"></textarea>
                 </div>
             </div>
 
@@ -37,5 +36,6 @@
         </form>
     </div>
 <script type="module" src="../src/index.js"></script>
+<script src="./bundle.js"></script>
 </body>
 </html>

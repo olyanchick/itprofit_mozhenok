@@ -9,10 +9,10 @@ module.exports = {
     mode: 'development',
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'), // Обслуживаем статические файлы из 'dist'
+            directory: path.join(__dirname, 'dist'),
         },
-        port: 9000, // Порт сервера (по умолчанию 8080, можно изменить)
-        open: true, // Открыть браузер при запуске сервера
+        port: 9001,
+        open: true,
     },
     module: {
         rules: [
@@ -22,6 +22,21 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.sass$/, // Правило для файлов .sass
+                use: [
+                    'style-loader',  // Встраивает CSS в DOM
+                    'css-loader',    // Преобразует CSS в CommonJS
+                    {
+                        loader: 'sass-loader', // Компилирует SASS в CSS
+                        options: {
+                            sassOptions: {
+                                indentedSyntax: true, // Включает поддержку синтаксиса .sass
+                            },
+                        },
+                    }
+                ]
             }
         ]
     },
