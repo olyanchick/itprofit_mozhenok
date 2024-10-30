@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -26,10 +27,10 @@ module.exports = {
             {
                 test: /\.sass$/, // Правило для файлов .sass
                 use: [
-                    'style-loader',  // Встраивает CSS в DOM
-                    'css-loader',    // Преобразует CSS в CommonJS
+                    MiniCssExtractPlugin.loader, // Извлекает CSS в отдельный файл
+                    'css-loader',               // Преобразует CSS в CommonJS
                     {
-                        loader: 'sass-loader', // Компилирует SASS в CSS
+                        loader: 'sass-loader',  // Компилирует SASS в CSS
                         options: {
                             sassOptions: {
                                 indentedSyntax: true, // Включает поддержку синтаксиса .sass
@@ -40,4 +41,9 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'styles.css', // Имя файла, куда будут записаны стили
+        }),
+    ],
 };

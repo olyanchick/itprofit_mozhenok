@@ -12,8 +12,8 @@ body
   display: flex
   flex-direction: column
   align-items: center
-  height: 100vh
-
+  //height: 100vh
+  padding-bottom: 100px
 
 /*Стили для модального окна*/
 
@@ -33,7 +33,7 @@ body
   line-height: normal
 
 .modal_open_button:hover
-  box-shadow: 0 0 20.3px 0 #FFC01E
+  box-shadow: 0px 0px 20.3px 0px #FFC01E
   transition: transform .7s
   transform: scale(1.05)
 
@@ -41,49 +41,57 @@ body.modal_open
   overflow: hidden
 
 .modal
-  opacity: 0
-  visibility: hidden
-  width: 100%
-  height: 100%
   position: fixed
   top: 0
   left: 0
+  width: 100%
+  height: 100%
   background-color: rgba(0, 0, 0, 0.6)
   z-index: 2
   display: flex
   align-items: center
   justify-content: center
+  opacity: 0
+  visibility: hidden
   transition: opacity 0.3s ease, visibility 0.3s ease
 
-.modal_container
-  width: 100%
-  height: 100%
-  display: flex
+/* Изначально модальное окно скрыто */
+.modal_hidden
+  opacity: 0
+  visibility: hidden
+
+/* При открытии модального окна */
+.modal.modal_opened
+  opacity: 1
+  visibility: visible
 
 .modal_window
   opacity: 0
   transform: scale(0.5)
   transition: opacity 0.3s ease, transform 0.3s ease
   position: relative
-  margin: auto
-  width: 400px
   background-color: #FFFFFF
-  padding: 150px 100px
+  padding: 50px 100px
   text-align: center
   border-radius: 10px
-
-.modal.modal_opened
-  opacity: 1
-  visibility: visible
 
 .modal.modal_opened .modal_window
   opacity: 1
   transform: scale(1)
 
+//.modal_close
+//  position: absolute
+//  top: 15px
+//  right: 15px
+//  cursor: pointer
+
+
 .modal_close
+  color: #FFC01E
+  font-size: 24px
   position: absolute
-  top: 15px
-  right: 15px
+  top: 5px
+  right: 10px
   cursor: pointer
 
 
@@ -129,7 +137,7 @@ h4
   display: flex
   flex-direction: column
 
-.error .input_field
+.error .input_field, .error textarea
   border-color: red
 
 .error_label
@@ -153,3 +161,14 @@ h4
   box-sizing: border-box
   text-align: center
   display: block
+
+#form_message
+  margin-top: 20px
+  font-size: 30px
+  font-weight: 500
+
+.success_message
+  color: #6B8E23
+
+.error_message
+  color: #FF6347

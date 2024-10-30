@@ -1,27 +1,142 @@
+// import './styles/style.sass';
+// import Inputmask from "inputmask";
+// import './modal.js';
+//
+// const phoneInput = document.querySelector("#input_phone");
+// Inputmask({ mask: "+375 (99) 999-99-99", inputEventOnly: true }).mask(phoneInput);
+//
+// function validation(form) {
+//     const emailInput = document.getElementById("input_email");
+//     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//
+//     let result = true;
+//
+//     function removeError(input) {
+//         const parent = input.parentNode;
+//         if (parent.classList.contains('error')) {
+//             parent.querySelector('.error_label').remove();
+//             parent.classList.remove('error');
+//         }
+//     }
+//
+//     // Создание сообщения об ошибке
+//     function createError(input, text) {
+//         const parent = input.parentNode;
+//         const errorLabel = document.createElement("label");
+//         errorLabel.classList.add("error_label");
+//         errorLabel.textContent = text;
+//         parent.classList.add('error');
+//         parent.append(errorLabel);
+//     }
+//
+//     // Удаляем предыдущие ошибки
+//     const allInputs = form.querySelectorAll('input, textarea');
+//     for (const input of allInputs) {
+//         removeError(input);
+//         if (input.value.trim() === '') {
+//             createError(input, 'Поле не заполнено!');
+//             result = false;
+//         }
+//     }
+//
+//     // Проверка корректности email, только если поле не пустое
+//     if (emailInput.value.trim() !== '' && !emailPattern.test(emailInput.value)) {
+//         createError(emailInput, "Пожалуйста, введите корректный адрес электронной почты.");
+//         result = false;
+//     }
+//
+//     return result;
+// }
+//
+// // Функция для отправки данных формы через AJAX
+// async function sendFormData(form) {
+//     const formData = new FormData(form);
+//     const data = Object.fromEntries(formData.entries()); // Преобразуем FormData в объект
+//
+//     try {
+//         const response = await fetch('http://localhost:9090/api/registration', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(data)
+//         });
+//         const result = await response.json();
+//         handleResponse(result, form);
+//
+//     } catch (error) {
+//         handleResponse(error, form);
+//         console.error('Ошибка при отправке формы:', error);
+//     }
+// }
+//
+// // Обработка ответа от сервера
+// function handleResponse(response, form) {
+//     clearFormErrors(); // Убираем предыдущие ошибки
+//
+//     const messageContainer = document.getElementById("form_message");
+//     console.log(response);
+//
+//     if (response.status === "success") {
+//         // Очистка полей формы
+//         form.reset();
+//
+//         messageContainer.append(response.message);
+//         messageContainer.classList.add("success_message");
+//
+//     } else {
+//         console.log(response);
+//         messageContainer.append(response.message);
+//         messageContainer.classList.add("error_message");
+//     }
+// }
+//
+// // Очистка ошибок перед новой проверкой
+// function clearFormErrors() {
+//     const errorLabels = document.querySelectorAll('.error_label');
+//     errorLabels.forEach(label => label.remove());
+//
+//     const errorFields = document.querySelectorAll('.error');
+//     errorFields.forEach(field => field.classList.remove('error'));
+//
+//     // Очистка сообщения в контейнере
+//     const messageContainer = document.getElementById("form_message");
+//     messageContainer.textContent = '';
+//     messageContainer.classList.remove("success_message", "error_message");
+// }
+//
+// // Обработчик отправки формы
+// document.getElementById('add_form').addEventListener('submit', function (event) {
+//     event.preventDefault();
+//
+//     // Проверяем форму перед отправкой
+//     if (validation(this)) {
+//         sendFormData(this); // Отправка данных формы через AJAX
+//     }
+// });
+
 import './styles/style.sass';
 import Inputmask from "inputmask";
 import './modal.js';
 
 // Маска для ввода телефона
-const phoneInput = document.querySelector("#input_phone");
-Inputmask({ mask: "+375 (99) 999-99-99", inputEventOnly: true }).mask(phoneInput);
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneInput = document.querySelector("#input_phone");
+    Inputmask({ mask: "+375 (99) 999-99-99", inputEventOnly: true }).mask(phoneInput);
 
-function validation(form) {
-    const emailInput = document.getElementById("input_email");
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    let result = true;
-
-    // Удаление ошибки, если есть
+// Удаление ошибки, если есть
     function removeError(input) {
         const parent = input.parentNode;
         if (parent.classList.contains('error')) {
-            parent.querySelector('.error_label').remove();
+            const errorLabel = parent.querySelector('.error_label');
+            if (errorLabel) {
+                errorLabel.remove();
+            }
             parent.classList.remove('error');
         }
     }
 
-    // Создание сообщения об ошибке
+// Создание сообщения об ошибке
     function createError(input, text) {
         const parent = input.parentNode;
         const errorLabel = document.createElement("label");
@@ -31,88 +146,106 @@ function validation(form) {
         parent.append(errorLabel);
     }
 
-    // Удаляем предыдущие ошибки
-    const allInputs = form.querySelectorAll('input');
-    for (const input of allInputs) {
-        removeError(input);
-        if (input.value === '') {
-            createError(input, 'Поле не заполнено!');
+    function validation(form) {
+        const emailInput = document.getElementById("input_email");
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        let result = true;
+
+        // Удаляем предыдущие ошибки
+        const allFields = form.querySelectorAll('input, textarea');
+        for (const field of allFields) {
+            removeError(field);
+            if (field.value.trim() === '') {
+                createError(field, 'Поле не заполнено!');
+                result = false;
+            }
+        }
+
+        // Проверка корректности email, только если поле не пустое
+        if (emailInput.value.trim() !== '' && !emailPattern.test(emailInput.value)) {
+            createError(emailInput, "Пожалуйста, введите корректный адрес электронной почты.");
             result = false;
+        }
+
+        return result;
+    }
+
+// Функция для отправки данных формы через AJAX
+    async function sendFormData(form) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries()); // Преобразуем FormData в объект
+
+        try {
+            const response = await fetch('http://localhost:9090/api/registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            handleResponse(result, form);
+
+        } catch (error) {
+            handleResponse(error, form);
+            console.error('Ошибка при отправке формы:', error);
         }
     }
 
-    // Проверка корректности email
-    if (!emailPattern.test(emailInput.value)) {
-        createError(emailInput, "Пожалуйста, введите корректный адрес электронной почты.");
-        result = false;
-    }
-
-    return result;
-}
-
-// Функция для отправки данных формы через AJAX
-async function sendFormData(form) {
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries()); // Преобразуем FormData в объект
-
-    try {
-        const response = await fetch('http://localhost:9090/api/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        handleResponse(result, form);
-
-    } catch (error) {
-        handleResponse(error, form);
-        console.error('Ошибка при отправке формы:', error);
-    }
-}
-
 // Обработка ответа от сервера
-function handleResponse(response, form) {
-    clearFormErrors(); // Убираем предыдущие ошибки
+    function handleResponse(response, form) {
+        clearFormErrors(); // Убираем предыдущие ошибки
 
-    const messageContainer = document.getElementById("form_message");
-    console.log(response);
-
-    if (response.status === "success") {
-        // Очистка полей формы
-        form.reset();
-
-        messageContainer.append(response.message);
-        messageContainer.classList.add("success_message");
-
-    } else {
+        const messageContainer = document.getElementById("form_message");
         console.log(response);
-        messageContainer.append(response.message);
-        messageContainer.classList.add("error_message");
+
+        if (response.status === "success") {
+            // Очистка полей формы
+            form.reset();
+
+            messageContainer.append(response.message);
+            messageContainer.classList.add("success_message");
+
+        } else {
+            console.log(response);
+            messageContainer.append(response.message);
+            messageContainer.classList.add("error_message");
+        }
     }
-}
 
 // Очистка ошибок перед новой проверкой
-function clearFormErrors() {
-    const errorLabels = document.querySelectorAll('.error_label');
-    errorLabels.forEach(label => label.remove());
+    function clearFormErrors() {
+        const errorLabels = document.querySelectorAll('.error_label');
+        errorLabels.forEach(label => label.remove());
 
-    const errorFields = document.querySelectorAll('.error');
-    errorFields.forEach(field => field.classList.remove('error'));
+        const errorFields = document.querySelectorAll('.error');
+        errorFields.forEach(field => field.classList.remove('error'));
 
-    // Очистка сообщения в контейнере
-    const messageContainer = document.getElementById("form_message");
-    messageContainer.textContent = '';
-    messageContainer.classList.remove("success_message", "error_message");
-}
+        // Очистка сообщения в контейнере
+        const messageContainer = document.getElementById("form_message");
+        messageContainer.textContent = '';
+        messageContainer.classList.remove("success_message", "error_message");
+    }
 
 // Обработчик отправки формы
-document.getElementById('add_form').addEventListener('submit', function (event) {
-    event.preventDefault();
+    document.getElementById('add_form').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    // Проверяем форму перед отправкой
-    if (validation(this)) {
-        sendFormData(this); // Отправка данных формы через AJAX
-    }
-});
+        // Проверяем форму перед отправкой
+        if (validation(this)) {
+            sendFormData(this); // Отправка данных формы через AJAX
+        }
+    });
+
+// Добавляем обработчики событий для очистки ошибок при фокусе на поле
+    const form = document.getElementById('add_form');
+    const allFields = form.querySelectorAll('input, textarea');
+
+    allFields.forEach(field => {
+        field.addEventListener('focus', () => {
+            removeError(field);
+        });
+    });
+
+})
