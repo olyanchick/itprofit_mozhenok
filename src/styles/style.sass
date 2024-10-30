@@ -10,9 +10,84 @@ body
 
 .container
   display: flex
-  justify-content: center
+  flex-direction: column
   align-items: center
   height: 100vh
+
+
+/*Стили для модального окна*/
+
+.modal_open_button
+  font-family: Commissioner, serif
+  cursor: pointer
+  display: block
+  margin: 100px auto
+  padding: 25px 60px
+  background-color: #FFC01E
+  border-radius: 48px
+  border: 1.618px solid #FFC01E
+  color: #000
+  font-size: 24px
+  font-style: normal
+  font-weight: 400
+  line-height: normal
+
+.modal_open_button:hover
+  box-shadow: 0 0 20.3px 0 #FFC01E
+  transition: transform .7s
+  transform: scale(1.05)
+
+body.modal_open
+  overflow: hidden
+
+.modal
+  opacity: 0
+  visibility: hidden
+  width: 100%
+  height: 100%
+  position: fixed
+  top: 0
+  left: 0
+  background-color: rgba(0, 0, 0, 0.6)
+  z-index: 2
+  display: flex
+  align-items: center
+  justify-content: center
+  transition: opacity 0.3s ease, visibility 0.3s ease
+
+.modal_container
+  width: 100%
+  height: 100%
+  display: flex
+
+.modal_window
+  opacity: 0
+  transform: scale(0.5)
+  transition: opacity 0.3s ease, transform 0.3s ease
+  position: relative
+  margin: auto
+  width: 400px
+  background-color: #FFFFFF
+  padding: 150px 100px
+  text-align: center
+  border-radius: 10px
+
+.modal.modal_opened
+  opacity: 1
+  visibility: visible
+
+.modal.modal_opened .modal_window
+  opacity: 1
+  transform: scale(1)
+
+.modal_close
+  position: absolute
+  top: 15px
+  right: 15px
+  cursor: pointer
+
+
+/*Стили для формы*/
 
 .form
   display: flex
@@ -70,12 +145,11 @@ h4
   padding: 25px 90px
   background-color: #FFC01E4D
   color: #CCA237
-  //font-family: var(--main-font-family)
   font-weight: 400
   font-size: 24px
   transition: transform .7s
   max-width: 300px
-  width: fit-content /*Ширина кнопки подгоняется под содержимое*/
+  width: fit-content
   box-sizing: border-box
   text-align: center
-  display: block /* Позволяет margin auto корректно центрировать блок */
+  display: block

@@ -10,6 +10,17 @@
 <body>
     <div class="container">
 
+        <button class="modal_open_button">Модальное окно</button>
+
+        <div class="modal">
+            <div class="modal_container">
+                <div class="modal_window">
+                    <h1>Привет, itprofit!</h1>
+                    <div class="modal_close">&#10006</div>
+                </div>
+            </div>
+        </div>
+
         <form action="" class="form" id="add_form" novalidate>
             <h1 class="form_title">Оставьте заявку и мы Вам перезвоним</h1>
 
@@ -33,9 +44,15 @@
             </div>
 
             <button type="submit" class="form_button">Отправить</button>
+            <div id="form_message"></div>
         </form>
+
+
     </div>
+
 <script type="module" src="../src/index.js"></script>
 <script src="./bundle.js"></script>
+    <script type="module" src="../src/modal.js"></script>
+
 </body>
 </html>

@@ -5,10 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --config webpack.config.js --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "server": "node server/index.js"
   },
   "private": true,
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "inputmask": "^5.0.9"
   },
   "devDependencies": {
