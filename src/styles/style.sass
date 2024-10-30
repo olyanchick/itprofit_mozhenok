@@ -12,7 +12,6 @@ body
   display: flex
   flex-direction: column
   align-items: center
-  //height: 100vh
   padding-bottom: 100px
 
 /*Стили для модального окна*/
@@ -33,7 +32,7 @@ body
   line-height: normal
 
 .modal_open_button:hover
-  box-shadow: 0px 0px 20.3px 0px #FFC01E
+  box-shadow: 0 0 20.3px 0 #FFC01E
   transition: transform .7s
   transform: scale(1.05)
 
@@ -71,20 +70,13 @@ body.modal_open
   transition: opacity 0.3s ease, transform 0.3s ease
   position: relative
   background-color: #FFFFFF
-  padding: 50px 100px
+  padding: 150px 100px
   text-align: center
   border-radius: 10px
 
 .modal.modal_opened .modal_window
   opacity: 1
   transform: scale(1)
-
-//.modal_close
-//  position: absolute
-//  top: 15px
-//  right: 15px
-//  cursor: pointer
-
 
 .modal_close
   color: #FFC01E
